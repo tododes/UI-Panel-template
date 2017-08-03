@@ -13,8 +13,19 @@ public class PanelManager : MonoBehaviour {
     }
 
 	void Start () {
+        MapSceneTree(current);
         current.startInflate();
 	}
+
+    public void MapSceneTree(Panel current){
+        if (current.child.Count > 0){
+            for (int i = 0; i < current.child.Count; i++){
+                current.child[i].parent = current;
+                MapSceneTree(current.child[i]);
+            }
+        }
+       
+    }
 
 	void Update () {
 		

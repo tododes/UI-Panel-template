@@ -13,8 +13,8 @@ public class Panel : MonoBehaviour {
     private PanelManager manager;
 
     public PanelStatus status;
-    public Panel prev;
-    public List<Panel> next = new List<Panel>();
+    public Panel parent;
+    public List<Panel> child = new List<Panel>();
 
     void Start(){
         manager = PanelManager.singleton;
@@ -44,6 +44,7 @@ public class Panel : MonoBehaviour {
             if (rect.localScale.x > 0f)
                 rect.localScale -= inflateRate * Time.deltaTime;
             else {
+                rect.localScale = Vector3.zero;
                 status = PanelStatus.ZERO;
             }
         }
@@ -51,12 +52,12 @@ public class Panel : MonoBehaviour {
 
     public void GoToNext(int index) {
         startDeflate();
-        StartCoroutine(DelayToNextPanel(next[index]));
+        StartCoroutine(DelayToNextPanel(child[index]));
     }
 
     public void GoToPrev() {
         startDeflate();
-        StartCoroutine(DelayToNextPanel(prev));
+        StartCoroutine(DelayToNextPanel(parent));
     }
 
     public float getInflateTime(){
